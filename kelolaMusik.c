@@ -1,0 +1,1 @@
+/*Ini buat mengelola seluruh lagunya, buat ngeshow data lagu dari file txt musiks aja si*/

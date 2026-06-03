@@ -3,11 +3,19 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "rekomendLagu.c"
+#include "kelolaMusik.c"
+#include "playlist.c"
+#include "queuePlayLagu.c"
+#include "playedHistory.c"
+#include "genrePengelompokkanLagu.c"
+#include "user.c"
+#include "utility.c"
 
 typedef struct dataMusik
 {
     /* data */
-}dataMusik;
+}dataMusik; 
 
 void laguData(){
     FILE *Musik;
