@@ -1,3 +1,5 @@
 /*
 Ngelola genre lagu
+Display Genre
+Show Songs By Genre
 */
