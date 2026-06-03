@@ -3,14 +3,15 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "rekomendLagu.c"
+
+#include "utility.c"
+#include "user.c"
 #include "kelolaMusik.c"
 #include "playlist.c"
 #include "queuePlayLagu.c"
 #include "playedHistory.c"
 #include "genrePengelompokkanLagu.c"
-#include "user.c"
-#include "utility.c"
+#include "rekomendLagu.c"
 
 typedef struct dataMusik
 {
