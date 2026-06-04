@@ -16,7 +16,7 @@
 typedef struct dataMusik
 {
     /* data */
-}dataMusik; 
+}dataMusik;   
 
 void laguData(){
     FILE *Musik;
