@@ -9,8 +9,18 @@ typedef struct userData
     char password[100];
 }userData;
 
-void cekUsn(){
+int cekUsn(char *username){
+    char userUsn[100], userPw[100];
+    char path[900];
+    sprintf(path, "DataSentral/user.txt");
+    FILE *data = fopen(path, "r");
 
+    while (fscanf(data, "%s %s", userUsn, userPw) != EOF){
+        if (strcmp(username, userUsn) == 0){
+            fclose(data);
+            return 1;
+        }
+    }
 }
 
 void registrasi(){
@@ -22,6 +32,10 @@ void registrasi(){
     printf("Masukkan passwordnya: ");
     fgets(user.password, sizeof(user.password), stdin);
     user.password[strcspn(user.password, "\n")] = '\0';
+
+    if (cekUsn(user.username)){
+        printf("\nIni usernamenya udah ada, pake username lain\n");
+    }
 }
 
 void login(){
