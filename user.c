@@ -91,8 +91,9 @@ int login(char *userMasuk){
     userData Userlogin;
     FILE *user;
     char usn[100], userPw[100];
+    int ditemukan;
     ulang:
-    int ditemukan = 0;
+    ditemukan = 0;
     printf("Masukkan Username kamu: ");
     fgets(Userlogin.username, sizeof(Userlogin.username), stdin);
     Userlogin.username[strcspn(Userlogin.username, "\n")] = '\0';
