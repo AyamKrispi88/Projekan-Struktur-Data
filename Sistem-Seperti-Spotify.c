@@ -21,18 +21,41 @@ int main(){
     do
     {
         printf("Menu Pilihan: ");
-        printf("Login");
+        printf("\n1. Login\n2. Registrasi\n3. Keluar\n");
+        printf("Masukkan Pilihan: ");
         scanf("%d", &pil);
         switch (pil)
         {
         case 1:{
-            /* code */
+            login(userMasuk);
+            if (login(userMasuk)){
+                printf("Selamat datang @%s", userMasuk);
+                menuLogined(userMasuk);
+            }
+            break;
+        }
+        case 2:{
+            registrasi();
+            break;
+        }
+        case 3:{
+            printf("\nBaik, TRMKSH.\n");
             break;
         }
         default:{
+            printf("\nMasukkin pilihan yang bener lah\n");
             break;
         }
         } 
-    } while (pil != 5);
+    } while (pil != 3);
+    
+}
+
+void menuLogined(char *usermasuk){
+    int pil;  
+    do
+    {
+        /* code */
+    } while (pil != 6);
     
 }
