@@ -16,17 +16,14 @@ typedef struct kelolaMusik
 
 typedef struct dataMusik
 {
-    /* data */
+    
 }dataMusik;   
 
 void laguData(){
     FILE *Musik;
     int lgu;
     Musik = fopen("lagu.txt", "r");
-    while ((lgu = fgetc(Musik)) != EOF){
-        printf("%s", lgu);
-    }
-    fclose(Musik);
+    
 }
 
 void liat(){

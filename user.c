@@ -42,7 +42,8 @@ int cekUsn(char *username){
 void registrasi(){
     userData user;
     char pil;
-    FILE *dataUtama;
+    char path[100];
+    FILE *dataUtama, *playlst;
     awalRegist:
     printf("\nRegistrasi akun\n");
     printf("Masukkan Username kamu(Tanpa Spasi dan Gabisa diubah): ");
@@ -74,6 +75,13 @@ void registrasi(){
     fprintf(dataUtama, "%s %s\n", user.username, user.password);
     fclose(dataUtama);
     mkdir(user.username);
+    sprintf(path, "%s/playlist.txt", user.username);
+    playlst = fopen(path, "w");
+    if (playlst == NULL){
+        printf("\nSistem error\n");
+        return;
+    }
+    fclose(playlst);
 
     printf("Selamat datang %s", user.username);
     return;
