@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <dirent.h>
+#include <direct.h>
 
 void registrasi();
 int cekUsn(char *username);
@@ -43,13 +45,17 @@ void registrasi(){
 
     if (cekUsn(user.username)){ //ini artinya, if fungsi ini true
         printf("\nIni usernamenya udah ada, pake username lain\n");
+        ulangPlih:
         printf("\nMau input username ulang?: ");
+        scanf(" %c", &pil);
+        while (getchar() != '\n');
         if (pil == 'y' || pil == 'Y'){
             goto awalRegist;
         } else if (pil == 'n' || pil == 'N'){
             return;
         } else {
             printf("\nBenerin dikit lah inputnya\n");
+            goto ulangPlih;
         }
     }
 
@@ -63,49 +69,57 @@ void registrasi(){
         return;
     }
 
-    fprintf(dataUtama, "%s||%s\n", user.username, user.password);
+    fprintf(dataUtama, "%s %s\n", user.username, user.password);
     fclose(dataUtama);
     mkdir(user.username);
 
     printf("Selamat datang %s", user.username);
-
+    return;
 }
 
-int login(char *username){
-    userData login;
+int login(char *userMasuk){
+    userData Userlogin;
     FILE *user;
     char usn[100], userPw[100];
+    ulang:
+    int ditemukan = 0;
     printf("Masukkan Username kamu: ");
-    fgets(login.username, sizeof(login.username), stdin);
-    login.username[strcspn(login.username, "\n")] = '\0';
+    fgets(Userlogin.username, sizeof(Userlogin.username), stdin);
+    Userlogin.username[strcspn(Userlogin.username, "\n")] = '\0';
     printf("Masukkan Password: ");
-    fgets(login.password, sizeof(login.password), stdin);
-    login.password[strcspn(login.password, "\n")] = '\0';
+    fgets(Userlogin.password, sizeof(Userlogin.password), stdin);
+    Userlogin.password[strcspn(Userlogin.password, "\n")] = '\0';
 
-    char path;
+    char path[100];
     sprintf(path, "DataSentral/user.txt");
     user = fopen(path, "r");
-
-    while (user != EOF){
-
-        if (user == NULL){
-
+    if (user == NULL){
+        printf("Aduh sistem error");
         }
-        (fscanf(user, "%s %s", usn, userPw));
-        if (strcm(username, usn) == 1){
-            if (strcmp(login.password, userPw) == 1){
-            }
-            if (strcmp(login.password, userPw) == 0){
+
+    while (fscanf(user, "%s %s", usn, userPw)!= EOF ){
+        if (strcmp(Userlogin.username, usn) == 0){
+            ditemukan = 1;
+            if (strcmp(Userlogin.password, userPw) == 0){
+                printf("\nSudah berhasil login, selamat datang @%s\n", Userlogin.username);
+                strcpy(userMasuk, Userlogin.username);
+                fclose(user);
+                return 1;
+            } else {
                 printf("\nPassword atau Usernamenya salah, masukkan ulang\n");
+                fclose(user);
+                goto ulang;
             }
-        } else {
-            printf("\nPassword atau usernamenya salah, masukkan ulang\n");
         }
     }
     fclose(user);
-
+    if (!ditemukan){
+        printf("\nUsernamenya ga ada\n");
+        goto ulang;
+    }
+    return 0;
 }
 
 void hapusAkun(char *username){
-
+    
 }
