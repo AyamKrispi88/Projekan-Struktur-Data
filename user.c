@@ -91,7 +91,7 @@ int login(char *userMasuk){
     userData Userlogin;
     FILE *user;
     char usn[100], userPw[100];
-    int ditemukan;
+    int ditemukan; 
     ulang:
     ditemukan = 0;
     printf("Masukkan Username kamu: ");
