@@ -13,27 +13,15 @@
 #include "genrePengelompokkanLagu.c"
 #include "rekomendLagu.c"
 
-typedef struct dataMusik
-{
-    /* data */
-}dataMusik;   
 
-void laguData(){
-    FILE *Musik;
-    int lgu;
-    Musik = fopen("lagu.txt", "r");
-    while ((lgu = fgetc(Musik)) != EOF){
-        printf("%s", lgu);
-    }
-    fclose(Musik);
-}
 
 int main(){
     int pil;
+    char userMasuk[100];
     do
     {
         printf("Menu Pilihan: ");
-        printf("");
+        printf("Login");
         scanf("%d", &pil);
         switch (pil)
         {
