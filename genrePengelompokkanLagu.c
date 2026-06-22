@@ -26,4 +26,17 @@ typedef struct nodeGenre
 
 nodeGenre *root = NULL;
 
+
+nodeGenre *untukGenre(char genre[]){
+    nodeGenre *iniGenre = (nodeGenre *) malloc(sizeof(nodeGenre));
+
+    strcpy(iniGenre->genre, genre);
+    iniGenre->headLagu = NULL;
+    iniGenre->kanan = NULL;
+    iniGenre->kiri = NULL;
+
+    return iniGenre;
+}
+
+
 int main(){}

@@ -20,6 +20,7 @@ typedef struct kiuw
 
 struct kiuw *head = NULL;
 
+
 void AddToQueue(){
     kiuw *node = (kiuw *) malloc(sizeof(kiuw));
     FILE *musik = fopen("DataSentral/user.txt", "r");
@@ -40,6 +41,7 @@ void playNext(){
     printf("\nKetik S atau s untuk skip||Ketik P atau p untuk ke lagu sebelumnya\n");
     char pilihan;
     printf("Pilihan: ");
+    
 }
 
 void viewQueue(){
