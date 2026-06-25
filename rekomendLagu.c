@@ -19,7 +19,6 @@ typedef struct {
 Folder folderList[10];     
 int banyak = 0;             
 
-// ========================================================
 
 void playLagu() {
     if (banyak == 0) {
