@@ -7,7 +7,7 @@
 
 void registrasi();
 int cekUsn(char *username);
-int login(char *username);
+int login(char *userMasuk);
 void hapusAkun(char *username);
 void hapusIsiFolder(char *path);
 
@@ -188,4 +188,3 @@ void hapusIsiFolder(char *path){
     }
     closedir(directory);
 }
-
