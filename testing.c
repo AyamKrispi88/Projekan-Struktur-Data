@@ -9,6 +9,7 @@
 #include "queuePlayLagu.c"
 #include "genrePengelompokkanLagu.c"
 #include "rekomendLagu.c"
+#include "playedHistory.c"
 
 
 void menuLogined(char *usermasuk);
