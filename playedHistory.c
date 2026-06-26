@@ -30,7 +30,10 @@ void lihatHistory(char *username) {
 }
 
 
-
+int main(){
+    char username[100] = "Anjay";
+    lihatHistory(username);
+}
 /*
 hystory played song intinya
 Push History
