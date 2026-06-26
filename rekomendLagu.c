@@ -23,7 +23,7 @@ int banyak = 0;
 
 void playLagu() {
     if (banyak == 0) {
-        printf("\nBelum ada playlist untuk diputar.\n");
+        printf("\nBelum ada     playlist untuk diputar.\n");
         return;
     }
 
@@ -115,4 +115,5 @@ Rekomendasi lagu
 Show Recommendation
 make graph
 */
+
 
