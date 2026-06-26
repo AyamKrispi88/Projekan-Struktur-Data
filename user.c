@@ -75,7 +75,7 @@ void registrasi(){
     fprintf(dataUtama, "%s %s\n", user.username, user.password);
     fclose(dataUtama);
     mkdir(user.username);
-    sprintf(path, "%s/playlist.txt", user.username);
+    sprintf(path, "%s/listPlaylist.txt", user.username);
     playlst = fopen(path, "w");
     if (playlst == NULL){
         printf("\nSistem error\n");
@@ -83,7 +83,7 @@ void registrasi(){
     }
     fclose(playlst);
 
-    printf("Selamat datang %s", user.username);
+    printf("Selamat datang %s\n", user.username);
     return;
 }
 
