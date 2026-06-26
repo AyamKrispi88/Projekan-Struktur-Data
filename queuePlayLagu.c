@@ -112,21 +112,26 @@ void buatQueue(char *userMasuk, char *playlistPilihan){
 void viewQueue(char *userMasuk){
     kiuw *temp = head;
     int no = 1;
+    char path[100];
     if (head == NULL){
         printf("\nBelum ada lagu yang diplay\n");
         return; 
     } 
-
+    FILE *history;
+    sprintf(path, "%s/history.txt", userMasuk);
+    history = fopen(path, "a");
     printf("\nQueue %s\n", userMasuk);
     while (temp != NULL){
         if (temp == current){
              printf("%d. %s <-- Lagu yang lagi diplay\n", no, temp->lagu);
+             //fprintf("");
         } else {
             printf("%d. %s\n", no, temp->lagu);
         }
         temp = temp->next;
         no++;
     }
+
     
     while(1){
     printf("\nPilih: S atau s untuk skip, p atau P untuk prev, q atau Q untuk quit\n");
