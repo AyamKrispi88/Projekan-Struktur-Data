@@ -10,6 +10,7 @@ void tambahLaguKePlaylist(char *username, char *namaPlaylist);
 void hapusLagu(char *username, char *namaPlaylist);
 void menuAturPlaylist(char *userMasuk);
 void menuAturIsiPlaylist(char *username, char *namaPlayList);
+void liatIsiPlaylist(char *username, char *namaPlaylist);
 
 void buatPlaylist(char *username) {
     char namaPlaylist[100];
@@ -180,6 +181,8 @@ void viewListPlaylist(char *username){
                 menuAturIsiPlaylist(username, plihan);
                 fclose(plylst);
                 return;
+            } else {
+                printf("\nNama Playlist salah atau tidak tepat\n");
             }
         }
     } else if(decide =='n' || decide == 'N'){
@@ -300,3 +303,30 @@ void hapusLagu(char *username, char *namaPlaylist) {
         printf("Lagu '%s' tidak ditemukan di playlist ini.\n", laguHapus);
     }
 }
+
+void liatIsiPlaylist(char *username, char *namaPlaylist){
+    FILE *playlist;
+    char path[200], isiPlaylist[200];
+    sprintf(path, "%s/%s.txt", username, namaPlaylist);
+    playlist = fopen(path, "r");
+    if (playlist == NULL){
+        printf("\nSistem Error\n");
+        return;
+    }
+
+    int d = 0;
+    printf("\n--------ISI PLAYLIST--------\n");
+    while (fgets (isiPlaylist, sizeof(isiPlaylist), playlist) != NULL){
+        isiPlaylist[strcspn(isiPlaylist, "\n")] = '\0';
+        d = 1;
+        printf("%s", isiPlaylist);
+        d++;
+    }
+
+    if (d == 0){
+        printf("\nPlaylist Kosong\n");
+        return;
+    }
+    fclose(playlist);
+}
+

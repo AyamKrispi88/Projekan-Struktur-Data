@@ -150,6 +150,7 @@ void menuAturPlaylist(char *userMasuk){
         while (getchar() != '\n');
         continue;
         }
+        getchar();
         switch (pil)
         {
         case 1:{
@@ -179,13 +180,14 @@ void menuAturIsiPlaylist(char *username, char *namaPlayList){
     int pil;
     do
     {
-        printf("\nMenu:\n1. Tambah lagu ke playlist\n2. Hapus lagu dari playlist\n3. Keluar\n");
+        printf("\nMenu:\n1. Tambah lagu ke playlist\n2. Hapus lagu dari playlist\n3. Liat isi playlist\n4. Keluar\n");
         printf("\nMasukkan pilihan:");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
+        getchar();
         switch (pil)
         {
         case 1:{
@@ -196,14 +198,17 @@ void menuAturIsiPlaylist(char *username, char *namaPlayList){
             break;
         }
         case 3:{
+            liatIsiPlaylist(username, namaPlayList);
+            break;
+        }
+        case 4:{
             printf("\nTerima Kasih\n");
             return;
         }
         default:{
             break;}
         }
-    } while (pil != 3);
-    
+    } while (pil != 4);
 }
 
 void pilihanGenre(){
@@ -219,6 +224,7 @@ void pilihanGenre(){
         while (getchar() != '\n');
         continue;
         }
+        getchar();
         switch (pil)
         {
         case 1:{
