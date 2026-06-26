@@ -112,21 +112,27 @@ void buatQueue(char *userMasuk, char *playlistPilihan){
 void viewQueue(char *userMasuk){
     kiuw *temp = head;
     int no = 1;
+    char path[100];
     if (head == NULL){
         printf("\nBelum ada lagu yang diplay\n");
         return; 
     } 
-
+    FILE *history;
+    sprintf(path, "%s/history.txt", userMasuk);
+    history = fopen(path, "a");
     printf("\nQueue %s\n", userMasuk);
     while (temp != NULL){
         if (temp == current){
              printf("%d. %s <-- Lagu yang lagi diplay\n", no, temp->lagu);
+             //fprintf("");
+             //ini ntar aja
         } else {
             printf("%d. %s\n", no, temp->lagu);
         }
         temp = temp->next;
         no++;
     }
+
     
     while(1){
     printf("\nPilih: S atau s untuk skip, p atau P untuk prev, q atau Q untuk quit\n");
@@ -177,42 +183,4 @@ void clearQueue(){
     current= NULL;
 
     printf("\nQueue sudah dikosongkan\n");
-}
-
-void pilihanUser(char *userMasuk){
-    int pil;
-    do
-    {
-        printf("\nMenu playlist dan play stuff\n");
-        printf("Pilih berdasarkan nomor urut\n1. Pilih playlist\n2. Liat Queue\n3. Clear Queue\n");
-        if (scanf("%d", &pil) != 1) {
-        printf("Tidak valid\n");
-        while (getchar() != '\n');
-        continue;
-        }
-        switch (pil)
-        {
-        case 1:{
-            PlaylistQueue(userMasuk);
-            break;}
-        
-        case 2:{
-            viewQueue(userMasuk);
-            break;}
-
-        case 3:{
-            clearQueue();
-            break;}
-
-        case 4:{
-            printf("\nTerima kash\n");
-            break;}
-        
-        default:{
-            printf("\nPilih yang bener lah\n");
-            break;}
-        }
-    } while (pil != 4);
-    return;
-    
 }
