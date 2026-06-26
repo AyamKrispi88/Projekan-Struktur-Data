@@ -87,7 +87,7 @@ void tambahLaguGenre(nodeGenre *genreNode, char judul[]){
 }
 
 void bacaMusik(){
-    FILE *Musiks = fopen("DataSentral/musiks.txt", "r");
+    FILE *Musiks = fopen("DataSentral/musiksGenre.txt", "r");
 
     if (Musiks == NULL){
         printf("\nSistem error\n");
