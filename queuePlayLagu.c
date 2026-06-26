@@ -30,7 +30,7 @@ struct kiuw *current = NULL;
 
 void PlaylistQueue(char *userMasuk){
     char path[200];
-    sprintf(path, "%s/playlist.txt", userMasuk);
+    sprintf(path, "%s/listPlaylist.txt", userMasuk);
     FILE *musik = fopen(path, "r"); //ini isinya nama nama file playlist di playlist.txt
     char judulPlaylist[100];
     if (musik == NULL){
@@ -185,8 +185,11 @@ void pilihanUser(char *userMasuk){
     {
         printf("\nMenu playlist dan play stuff\n");
         printf("Pilih berdasarkan nomor urut\n1. Pilih playlist\n2. Liat Queue\n3. Clear Queue\n");
-        scanf("%d", &pil);
-        getchar();
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
         switch (pil)
         {
         case 1:{

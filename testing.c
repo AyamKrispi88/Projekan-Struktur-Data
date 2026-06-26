@@ -21,7 +21,11 @@ int main(){
         printf("Menu Pilihan: ");
         printf("\n1. Login\n2. Registrasi\n3. Keluar\n");
         printf("Masukkan Pilihan: ");
-        scanf("%d", &pil);
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
         getchar();
         switch (pil)
         {
@@ -56,12 +60,16 @@ void menuLogined(char *usermasuk){
     {
         printf("\nMenu\n1. Hapus Akun\n2. Liat seluruh lagu berdasarkan genre\n3. Playlist stuff\n");
         printf("Masukkan pilihan: ");
-        scanf("%d", &pil);
-        getchar();
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
         switch (pil)
         {
         case 1:{
             hapusAkun(usermasuk);
+            return;
             break;}
         case 2:{
             pilihanGenre();

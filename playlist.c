@@ -4,6 +4,7 @@
 
 
 void buatPlaylist(char *username);
+void hapusPlaylist(char *username);
 void viewPlaylist(char *username);
 void tambahLaguKePlaylist(char *username, char *namaPlaylist);
 void hapusLagu(char *username, char *namaPlaylist);
@@ -17,7 +18,7 @@ void buatPlaylist(char *username) {
     char listPlaylist[200];
     char ww[256];
     char playlistName[200];
-    sprintf(listPlaylist, "%s/playlist.txt", username);
+    sprintf(listPlaylist, "%s/listPlaylist.txt", username);
     FILE *dataPlaylist = fopen(listPlaylist, "r");
     if (dataPlaylist == NULL){
         printf("\nSistem error\n");
@@ -51,7 +52,7 @@ void buatPlaylist(char *username) {
     fclose(dataPlaylist);
     // Format path: "nama_user/nama_playlist.txt"
     sprintf(path, "%s/%s.txt", username, namaPlaylist);
-    sprintf(wei, "%s/playlist.txt", username);
+    sprintf(wei, "%s/listPlaylist.txt", username);
     FILE *file = fopen(path, "w");
     if (file == NULL) {
         printf("Gagal membuat playlist. Pastikan folder user '%s' sudah ada.\n", username);
@@ -69,12 +70,78 @@ void buatPlaylist(char *username) {
 
 }
 
+void hapusPlaylist(char *username){
+    printf("\nHAPUS Playlist\n");
+    FILE *playlist, *temp;
+    char path[200], way[200], tempPath[200];
+    char listPlaylist[200], namaPlaylist[200], tempPlaylist[200];
+    sprintf(path, "%s/listPlaylist.txt", username);
+    sprintf(tempPath, "%s/temp.txt", username);
+    playlist = fopen(path, "r");
+    if (playlist == NULL){
+        printf("\\nSistem Eror\n");
+        return;
+    }
+
+    int n = 0;
+    int d = 1;
+    printf("\nList Playlist\n");
+    while (fgets(listPlaylist, sizeof(listPlaylist), playlist) != NULL)
+    {
+        listPlaylist[strcspn(listPlaylist, "\n")] = '\0';
+        n = 1;
+        printf("%d. %s\n", d, listPlaylist);
+        d++;
+    }
+    if (n == 0)
+    {
+        printf("\nTidak ada playlist\n");
+        fclose(playlist);
+        return;
+    }
+    temp = fopen(tempPath, "w");
+    while (1)
+    {
+    d = 0;
+    rewind(playlist);
+    printf("Masukkan nama playlist yang ingin dihapus: ");
+    fgets(namaPlaylist, sizeof(namaPlaylist), stdin);
+    namaPlaylist[strcspn(namaPlaylist, "\n")] = '\0';
+    while (fgets(listPlaylist, sizeof(listPlaylist), playlist) != NULL)
+    {
+    listPlaylist[strcspn(listPlaylist, "\n")] = '\0';
+    if (strcmp(listPlaylist, namaPlaylist) == 0){
+        d = 1;
+        while (fgets(listPlaylist, sizeof(listPlaylist), playlist) != NULL)
+        {
+            listPlaylist[strcspn(listPlaylist, "\n")] = '\0';
+            if (strcmp(listPlaylist, namaPlaylist) != 0){
+                fprintf(temp, "%s", listPlaylist);
+            }
+        }
+        
+    } else {
+        printf("\nItu nama playlist yang dimasukkan salah, input ulang\n");
+        continue;
+    }
+    }
+    break;
+    }
+    fclose(playlist);
+    fclose(temp);
+    remove(path);
+    rename(tempPath, path);
+    sprintf(way, "%s/%s.txt", username, namaPlaylist);
+    printf("\nPlaylist %s berhasil dihapus\n", namaPlaylist);
+    remove(way);
+}
+
 void viewListPlaylist(char *username){
     FILE *plylst;
     char path[200];
     char namaPlaylist[200];
     char plihan[200];
-    sprintf(path, "%s/playlist.txt", username);
+    sprintf(path, "%s/listPlaylist.txt", username);
     plylst = fopen(path, "r");
     if (plylst == NULL){
         printf("Sistem Error\n");
@@ -239,7 +306,7 @@ void menuAturPlaylist(char *userMasuk){
     do
     {
         printf("\nMenu:\n");
-        printf("1. Buat Playlist\n2. Playlist\n3. Keluar\n");
+        printf("1. Buat Playlist\n2. Playlist\n3. Hapus Playlist\n4. Keluar\n");
         printf("Masukkan pilihan: ");
         scanf("%d", &pil);
         getchar();
@@ -254,6 +321,10 @@ void menuAturPlaylist(char *userMasuk){
             break;
         }
         case 3:{
+            hapusPlaylist(userMasuk);
+            break;
+        }
+        case 4:{
             printf("\nTerima kasih\n");
             return;
         }
@@ -270,8 +341,11 @@ void menuAturIsiPlaylist(char *username, char *namaPlayList){
     {
         printf("\nMenu:\n1. Tambah lagu ke playlist\n2. Hapus lagu dari playlist\n3. Keluar\n");
         printf("\nMasukkan pilihan:");
-        scanf("%d", &pil);
-        getchar();
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
         switch (pil)
         {
         case 1:{
