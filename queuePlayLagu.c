@@ -125,6 +125,7 @@ void viewQueue(char *userMasuk){
         if (temp == current){
              printf("%d. %s <-- Lagu yang lagi diplay\n", no, temp->lagu);
              //fprintf("");
+             //ini ntar aja
         } else {
             printf("%d. %s\n", no, temp->lagu);
         }
