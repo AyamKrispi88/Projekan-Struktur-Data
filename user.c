@@ -7,7 +7,7 @@
 
 void registrasi();
 int cekUsn(char *username);
-int login(char *username);
+int login(char *userMasuk);
 void hapusAkun(char *username);
 void hapusIsiFolder(char *path);
 
@@ -42,8 +42,8 @@ int cekUsn(char *username){
 void registrasi(){
     userData user;
     char pil;
-    char path[100];
-    FILE *dataUtama, *playlst;
+    char path[100], historyPath[100];
+    FILE *dataUtama, *playlst, *history;
     awalRegist:
     printf("\nRegistrasi akun\n");
     printf("Masukkan Username kamu(Tanpa Spasi dan Gabisa diubah): ");
@@ -75,15 +75,22 @@ void registrasi(){
     fprintf(dataUtama, "%s %s\n", user.username, user.password);
     fclose(dataUtama);
     mkdir(user.username);
-    sprintf(path, "%s/playlist.txt", user.username);
+    sprintf(path, "%s/listPlaylist.txt", user.username);
+    sprintf(historyPath, "%s/history.txt", user.username);
+    history = fopen(historyPath, "w");
     playlst = fopen(path, "w");
     if (playlst == NULL){
         printf("\nSistem error\n");
         return;
     }
+    if (history == NULL){
+        printf("\nSistem Error\n");
+        return;
+    }
+    fclose(history);
     fclose(playlst);
 
-    printf("Selamat datang %s", user.username);
+    printf("Selamat datang %s\n", user.username);
     return;
 }
 
@@ -188,4 +195,3 @@ void hapusIsiFolder(char *path){
     }
     closedir(directory);
 }
-

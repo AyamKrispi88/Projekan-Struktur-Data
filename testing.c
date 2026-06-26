@@ -4,14 +4,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "utility.c"
 #include "user.c"
-#include "kelolaMusik.c"
 #include "playlist.c"
 #include "queuePlayLagu.c"
-#include "playedHistory.c"
 #include "genrePengelompokkanLagu.c"
 #include "rekomendLagu.c"
+#include "playedHistory.c"
 
 
 void menuLogined(char *usermasuk);
@@ -24,11 +22,15 @@ int main(){
         printf("Menu Pilihan: ");
         printf("\n1. Login\n2. Registrasi\n3. Keluar\n");
         printf("Masukkan Pilihan: ");
-        scanf("%d", &pil);
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
+        getchar();
         switch (pil)
         {
         case 1:{
-            login(userMasuk);
             if (login(userMasuk)){
                 printf("Selamat datang @%s", userMasuk);
                 menuLogined(userMasuk);
@@ -49,7 +51,7 @@ int main(){
         }
         } 
     } while (pil != 3);
-    
+    return 0;
 }
 
 
@@ -57,7 +59,35 @@ void menuLogined(char *usermasuk){
     int pil;  
     do
     {
-        /* code */
-    } while (pil != 6);
+        printf("\nMenu\n1. Hapus Akun\n2. Liat seluruh lagu berdasarkan genre\n3. Playlist stuff\n");
+        printf("Masukkan pilihan: ");
+        if (scanf("%d", &pil) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
+        switch (pil)
+        {
+        case 1:{
+            hapusAkun(usermasuk);
+            return;
+            break;}
+        case 2:{
+            pilihanGenre();
+            break;
+        }
+        case 3:{
+            menuAturPlaylist(usermasuk);
+            break;
+        }
+        case 4:{
+            printf("\nTerima kasih\n");
+            break;
+        }
+        default:{
+            printf("\nPilih yang bener lah\n");
+            break;}
+        }
+    } while (pil != 4);
     
 }
