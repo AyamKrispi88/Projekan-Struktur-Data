@@ -9,7 +9,6 @@
 #include "queuePlayLagu.c"
 #include "genrePengelompokkanLagu.c"
 #include "rekomendLagu.c"
-#include "rekomendasi.c"
 #include "playedHistory.c"
 
 
@@ -64,15 +63,13 @@ void menuLogined(char *usermasuk){
     int pil;  
     do
     {
-        rekomendTop(usermasuk);
-        printf("\nMenu\n1. Hapus Akun\n2. Liat seluruh lagu berdasarkan genre\n3. Playlist stuff\n4. Play musik\n5. Play salah satu lagu rekomendasi\n6. Keluar\n");
+        printf("\nMenu\n1. Hapus Akun\n2. Liat seluruh lagu berdasarkan genre\n3. Playlist stuff\n4. Play musik\n5. Keluar\n");
         printf("Masukkan pilihan: ");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
-        getchar();
         switch (pil)
         {
         case 1:{
@@ -92,9 +89,6 @@ void menuLogined(char *usermasuk){
             break;
         }
         case 5:{
-            rekomendTop(usermasuk);
-        }
-        case 6:{
             printf("\nTerima kasih\n");
             break;
         }
@@ -102,55 +96,44 @@ void menuLogined(char *usermasuk){
             printf("\nPilih yang bener lah\n");
             break;}
         }
-    } while (pil != 6);
+    } while (pil != 4);
     
-}  
+}
 
 void pilihanUser(char *userMasuk){
     int pil;
     do
     {
-        rekomendTop(userMasuk);
         printf("\nMenu playlist dan play stuff\n");
-        printf("Pilih berdasarkan nomor urut\n1. Play lagu dan queue random\n2. Pilih playlist untuk diplay\n3. Liat Queue\n4. Clear Queue\n5. History\n6. Keluar\n\n");
-        printf("Masukkan pilihan: ");
+        printf("Pilih berdasarkan nomor urut\n1. Pilih playlist\n2. Liat Queue\n3. Clear Queue\n");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
-        getchar();
         switch (pil)
         {
         case 1:{
-            jalankanAplikasi(userMasuk);
-            break;
-        }
-        case 2:{
             PlaylistQueue(userMasuk);
             break;}
         
-        case 3:{
+        case 2:{
             viewQueue(userMasuk);
             break;}
 
-        case 4:{
+        case 3:{
             clearQueue();
             break;}
-        
-        case 5:{
-            lihatHistory(userMasuk);
-            break;
-        }
-        case 6:{
-            printf("\nTerima kasih\n");
+
+        case 4:{
+            printf("\nTerima kash\n");
             break;}
         
         default:{
             printf("\nPilih yang bener lah\n");
             break;}
         }
-    } while (pil != 6);
+    } while (pil != 4);
     return;
     
 }
@@ -167,7 +150,6 @@ void menuAturPlaylist(char *userMasuk){
         while (getchar() != '\n');
         continue;
         }
-        getchar();
         switch (pil)
         {
         case 1:{
@@ -197,14 +179,13 @@ void menuAturIsiPlaylist(char *username, char *namaPlayList){
     int pil;
     do
     {
-        printf("\nMenu:\n1. Tambah lagu ke playlist\n2. Hapus lagu dari playlist\n3. Liat isi playlist\n4. Keluar\n");
+        printf("\nMenu:\n1. Tambah lagu ke playlist\n2. Hapus lagu dari playlist\n3. Keluar\n");
         printf("\nMasukkan pilihan:");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
-        getchar();
         switch (pil)
         {
         case 1:{
@@ -215,17 +196,14 @@ void menuAturIsiPlaylist(char *username, char *namaPlayList){
             break;
         }
         case 3:{
-            liatIsiPlaylist(username, namaPlayList);
-            break;
-        }
-        case 4:{
             printf("\nTerima Kasih\n");
             return;
         }
         default:{
             break;}
         }
-    } while (pil != 4);
+    } while (pil != 3);
+    
 }
 
 void pilihanGenre(){
@@ -234,14 +212,13 @@ void pilihanGenre(){
 
     do
     {
-        printf("\nMenu:\n1. Semua musik berdasarkan genre\n2. Rock\n3. Pop\n4. Indie\n5. Jazz\n6. Reggae(Regge)\n7. Keluar\n");
+        printf("\nMenu:\n1. Semua musik berdasarkan genre\n2. Rock\n3. Pop\ns4. Indie\n5. Keluar\n");
         printf("Masukkan pilihan(berdasarkan nomor): ");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
-        getchar();
         switch (pil)
         {
         case 1:{
@@ -260,15 +237,8 @@ void pilihanGenre(){
         case 4:{
             showMusik(cariGenre(root, "Indie"));
             break;}
+
         case 5:{
-            showMusik(cariGenre(root, "Jazz"));
-        }
-        case 6:{
-            showMusik(cariGenre(root, "Reggae"));
-            break;
-        }
-        
-        case 7:{
             printf("\nTerimksh\n");
             break;}
         
@@ -276,6 +246,6 @@ void pilihanGenre(){
             break;
         }
         }
-    } while (pil != 7);
+    } while (pil != 5);
     
 }
