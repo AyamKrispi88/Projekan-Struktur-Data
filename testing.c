@@ -71,6 +71,7 @@ void menuLogined(char *usermasuk){
         while (getchar() != '\n');
         continue;
         }
+        getchar();
         switch (pil)
         {
         case 1:{
