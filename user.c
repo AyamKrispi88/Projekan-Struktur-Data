@@ -69,6 +69,7 @@ void registrasi(){
     dataUtama = fopen("DataSentral/user.txt", "a");
     if (dataUtama == NULL){
         printf("\nError, sistemnya gabisa jalan\n");
+        perror("fopen");
         return;
     }
 
