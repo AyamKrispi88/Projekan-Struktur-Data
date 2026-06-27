@@ -9,6 +9,7 @@
 #include "queuePlayLagu.c"
 #include "genrePengelompokkanLagu.c"
 #include "rekomendLagu.c"
+#include "rekomendasi.c"
 #include "playedHistory.c"
 
 
@@ -105,12 +106,14 @@ void pilihanUser(char *userMasuk){
     do
     {
         printf("\nMenu playlist dan play stuff\n");
-        printf("Pilih berdasarkan nomor urut\n1. Pilih playlist\n2. Liat Queue\n3. Clear Queue\n");
+        printf("Pilih berdasarkan nomor urut\n1. Pilih playlist untuk diplay\n2. Liat Queue\n3. Clear Queue\n4. History\n5. Keluar\n\n");
+        printf("Masukkan pilihan: ");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
         while (getchar() != '\n');
         continue;
         }
+        getchar();
         switch (pil)
         {
         case 1:{
@@ -124,9 +127,13 @@ void pilihanUser(char *userMasuk){
         case 3:{
             clearQueue();
             break;}
-
+        
         case 4:{
-            printf("\nTerima kash\n");
+            
+            break;
+        }
+        case 5:{
+            printf("\nTerima kasih\n");
             break;}
         
         default:{

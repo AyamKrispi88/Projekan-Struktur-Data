@@ -315,12 +315,13 @@ void liatIsiPlaylist(char *username, char *namaPlaylist){
     }
 
     int d = 0;
+    int n = 1;
     printf("\n--------ISI PLAYLIST--------\n");
     while (fgets (isiPlaylist, sizeof(isiPlaylist), playlist) != NULL){
         isiPlaylist[strcspn(isiPlaylist, "\n")] = '\0';
         d = 1;
-        printf("%s", isiPlaylist);
-        d++;
+        printf("%d. %s\n", n, isiPlaylist);
+        n++;
     }
 
     if (d == 0){
