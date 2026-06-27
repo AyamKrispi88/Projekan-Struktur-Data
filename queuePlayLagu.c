@@ -44,7 +44,7 @@ void PlaylistQueue(char *userMasuk){
     printf("\nPlaylist yang kamu punya: ");
     while (fgets(judulPlaylist, sizeof(judulPlaylist), musik) != NULL){
         judulPlaylist[strcspn(judulPlaylist, "\n")] = '\0';
-        printf("\n%d. %s", uruT, judulPlaylist);
+        printf("\n%d. %s\n", uruT, judulPlaylist);
         uruT++;
     }
     fclose(musik);
@@ -53,7 +53,8 @@ void PlaylistQueue(char *userMasuk){
     playlistPilihan[strcspn(playlistPilihan, "\n")] = '\0';
     
     int pilihanmu;
-    printf("pilih metode putar mu : \n 1.Putar musik random\n 2.Putra sesuai urutan playlist");
+    printf("pilih metode putar mu : \n 1.Putar musik random\n 2.Putra sesuai urutan playlist\n");
+    printf("Masukkan pilihan berdasarkan nomor pilihan: ");
     scanf("%d", &pilihanmu);
     while(getchar() != '\n');
     if (pilihanmu == 2)
@@ -63,8 +64,7 @@ void PlaylistQueue(char *userMasuk){
     else{
         cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
     }
-    cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
-    
+    return;    
 }
 
 void cekIsiPlaylist(char *userMasuk, char *playlistPilihan, int pilihanmu){
@@ -150,12 +150,16 @@ void buatQueue(char *userMasuk, char *playlistPilihan, int pilihanmu){
 
 void viewQueue(char *userMasuk){
     kiuw *temp = head;
-    int no = 1;
+    int no;
     char path[100];
     if (head == NULL){
         printf("\nBelum ada lagu yang diplay\n");
         return; 
     } 
+    
+    perulangan:
+    no = 1;
+    temp = head;
     FILE *history;
     sprintf(path, "%s/history.txt", userMasuk);
     history = fopen(path, "a");
@@ -163,8 +167,8 @@ void viewQueue(char *userMasuk){
     while (temp != NULL){
         if (temp == current){
              printf("%d. %s <-- Lagu yang lagi diplay\n", no, temp->lagu);
-             //fprintf("");
-             //ini ntar aja
+             fprintf(history, "%s\n", current->lagu);
+             fclose(history);
         } else {
             printf("%d. %s\n", no, temp->lagu);
         }
@@ -185,7 +189,7 @@ void viewQueue(char *userMasuk){
             break;
         } else {
             current = current->next;
-            break;
+            goto perulangan;
         }
     } else if (sekips == 'p' || sekips == 'P'){
         if (current->prev == NULL){
@@ -200,7 +204,7 @@ void viewQueue(char *userMasuk){
     }else {
         printf("\nTolong lah, pilih yg bener\n");
     }
-}
+    }
 }
 
 void clearQueue(){

@@ -3,116 +3,175 @@
 #include <stdlib.h>
 #include <time.h>
 
-// 1. Struct untuk LinkedList lagu (node playlist)
-typedef struct playlist {
+typedef struct lagu {
     char judul[100];        
-    struct playlist *next;  
-} playlist;
+    struct lagu *next;
+}lagu;
 
-// 2. Struct untuk Folder yang menyimpan playlist
-typedef struct {
-    char nama[100];         
-    playlist *head;         
-} Folder;
+typedef struct graph{
+    char genre[100];
+    int jumlahPutaran;
+    lagu *listLagu;
+    struct graph *next;
+}graph;
 
-// 3. Variabel Global
-Folder folderList[10];     
-int banyak = 0;             
+graph *headGraph = NULL;
+graph *tailGraph = NULL;
 
+void bangunGraph();
+void updateDariHistory(char *username);
+void recomendGenreTopDua();
+void rekomendTop(char *username);
 
-void playLagu() {
-    if (banyak == 0) {
-        printf("\nBelum ada     playlist untuk diputar.\n");
+void bangunGraph(){
+    char buffer[200], path[200];
+    FILE *dataMusik;
+    sprintf(path, "DataSentral/musiksGenre.txt");
+    dataMusik = fopen(path, "r");
+
+    if (dataMusik == NULL){
+        printf("\nSistem Error\n");
         return;
     }
+    while (fgets(buffer, sizeof(buffer), dataMusik)){
+        buffer[strcspn(buffer, "\n")] = '\0';
+        char *judul = strtok(buffer, "|");
+        char *genre = strtok(NULL, "|");
+        graph *tempGenre = headGraph;
 
-    // 1. Pilih Folder
-    printf("\n=== PILIH FOLDER UNTUK DIPUTAR ===\n");
-    for (int i = 0; i < banyak; i++) {
-        printf("[%d] Folder: %s\n", i, folderList[i].nama);
-    }
-    
-    int idx;
-    printf("Pilih nomor folder: ");
-    scanf("%d", &idx);
-
-    if (idx < 0 || idx >= banyak || folderList[idx].head == NULL) {
-        printf("Folder tidak valid atau masih kosong!\n");
-        return;
-    }
-
-    // 2. Hitung total lagu di dalam folder ini
-    int jumlahLagu = 0;
-    playlist *temp = folderList[idx].head;
-    while (temp != NULL) {
-        jumlahLagu++;
-        temp = temp->next;
-    }
-
-    // 3. Tampilkan lagu agar user bisa memilih lagu pertama
-    printf("\n--- Isi Playlist '%s' ---\n", folderList[idx].nama);
-    temp = folderList[idx].head;
-    int nomor = 1;
-    while (temp != NULL) {
-        printf("%d. %s\n", nomor++, temp->judul);
-        temp = temp->next;
-    }
-
-    int pilihanLagu;
-    printf("Pilih nomor lagu yang ingin diputar pertama (1-%d): ", jumlahLagu);
-    scanf("%d", &pilihanLagu);
-
-    // Menuju ke lagu pilihan user
-    temp = folderList[idx].head;
-    for (int i = 1; i < pilihanLagu && temp != NULL; i++) {
-        temp = temp->next;
-    }
-
-    if (temp == NULL) {
-        printf("Lagu tidak ditemukan!\n");
-        return;
-    }
-
-    // Putar lagu utama
-    printf("SEDANG MEMUTAR: %s\n", temp->judul);
-
-    // Bersihkan buffer enter dari scanf sebelumnya
-    while(getchar() != '\n'); 
-
-    // 4. Sistem Autoplay Berputar (Random)
-    char aksi;
-    while (1) {
-        printf("\n[Tekan ENTER untuk lagu rekomendasi selanjutnya , Ketik 'q' lalu ENTER untuk stop : ");
-        aksi = getchar();
-        
-        if (aksi == 'q' || aksi == 'Q') {
-            printf("Pemutaran dihentikan.\n");
-            break; 
+        while (tempGenre != NULL)
+        {
+            if (strcmp(tempGenre->genre, genre) == 0){
+                break;
+            }
+            tempGenre = tempGenre->next;
         }
+        if (tempGenre == NULL){
+            graph *bangun = (graph *) malloc(sizeof(graph));
+            strcpy(bangun->genre, genre);
+            bangun->jumlahPutaran = 0;
+            bangun->listLagu = NULL;
+            bangun->next = NULL;
 
-        // Jika lagu cuma 1, putar itu terus
-        if (jumlahLagu == 1) {
-            printf(" SEDANG MEMUTAR: %s\n", folderList[idx].head->judul);
-            continue;
+            if (headGraph == NULL){
+                headGraph = tailGraph = bangun;
+            } else {
+                tailGraph->next = bangun;
+                tailGraph = bangun;
+            }
+            tempGenre = bangun;
         }
+        lagu *baru = (lagu *) malloc(sizeof(lagu));
+        strcpy(baru->judul, judul);
+        baru->next = NULL;
 
-        // Generate angka acak (0 sampai jumlahLagu - 1)
-        int randomAcak = rand() % jumlahLagu;
-        
-        // Mulai lagi dari head, lalu maju sebanyak angka acak
-        playlist *laguRekomendasi = folderList[idx].head;
-        for (int i = 0; i < randomAcak; i++) {
-            laguRekomendasi = laguRekomendasi->next;
+        if (tempGenre->listLagu == NULL){
+            tempGenre->listLagu = baru;
+        } else {
+            lagu *t = tempGenre->listLagu;
+            while(t->next) {
+                t = t->next;
+            }
+            t->next = baru;
         }
-        printf("SEDANG MEMUTAR: %s\n", laguRekomendasi->judul);
     }
+    fclose(dataMusik);
 }
 
 
-/*
-Rekomendasi lagu
-Show Recommendation
-make graph
-*/
+void updateDariHistory(char *username){
+    char path[200];
+    sprintf(path, "%s/history.txt", username);
+    FILE *file = fopen(path, "r");
+    if (file == NULL){
+        printf("\nError\n");
+        return;
+    }
 
+    char data[200];
+    while(fgets(data, sizeof(data), file) != NULL){
+        data[strcspn(data, "\n")] = '\0';
 
+        char *judul = data;
+
+        graph *g = headGraph;
+
+        while (g != NULL){
+            lagu *list = g->listLagu;
+
+            while (list != NULL){
+                if (strcmp(list->judul, judul) == 0){
+                    g->jumlahPutaran++;
+                    break;
+                }
+                list = list->next;
+            }
+            g = g->next;
+        }
+    }
+
+    fclose(file);
+}
+
+void recomendGenreTopDua(){
+    srand((unsigned)time(NULL));
+    graph *top1 = NULL;
+    graph *top2 = NULL;
+    lagu *temp1, *temp2;
+
+    graph *g = headGraph;
+    int jumlah;
+
+    while (g != NULL){
+        if (top1 == NULL || g->jumlahPutaran > top1->jumlahPutaran){
+            top2 = top1;
+            top1 = g;   
+        } else if (top2 == NULL || g->jumlahPutaran > top2->jumlahPutaran){
+            top2 = g;
+        }
+        g = g->next;
+    }
+
+    if (top1 == NULL || top1->jumlahPutaran == 0){
+        return;
+    } 
+    
+    printf("\nREKOMENDASI\n");
+        if (top1 != NULL && top1->listLagu != NULL){
+            temp1 = top1->listLagu;
+            jumlah = 0;
+            while (temp1 != NULL){
+                jumlah++;
+                temp1 = temp1->next;
+            }
+
+            int acak1 = rand() % jumlah;
+            temp1 = top1->listLagu;
+            while (acak1--){
+                temp1 = temp1->next;
+            }
+            printf("1. %s\n", temp1->judul);
+        } 
+        if (top2 != NULL && top2->listLagu != NULL){
+            jumlah = 0;
+            temp2 = top2->listLagu;
+            while (temp2 != NULL){
+                jumlah++;
+                temp2 = temp2->next;
+            }
+
+            int acak2 = rand() % jumlah;
+            temp2 = top2->listLagu  ;
+
+            while (acak2--){
+                temp2 = temp2->next;
+            }
+            printf("2. %s\n", temp2->judul);
+        }
+}
+
+void rekomendTop(char *username){
+    bangunGraph();
+    updateDariHistory(username);
+    recomendGenreTopDua();
+}
