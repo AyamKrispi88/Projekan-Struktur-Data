@@ -11,10 +11,12 @@ View Queue
 #include <time.h>
 
 void PlaylistQueue(char *userMasuk);
-void cekIsiPlaylist(char *userMasuk, char *playlistPilihan, int pilihanmu);
-void buatQueue(char *userMasuk, char *playlistPilihan, int pilihanmu);
+int cekIsiPlaylist(char *userMasuk, char *playlistPilihan);
+void buatStraightQueue(char *userMasuk, char *playlistPilihan);
+void buatRandomtQueue(char *userMasuk, char *playlistPilihan);
 void viewQueue(char *userMasuk);
 void playNext(char *userMasuk);
+int pilihanPlay(char *userMasuk, char *playlistPilihan);
 
 
 typedef struct kiuw
@@ -44,7 +46,7 @@ void PlaylistQueue(char *userMasuk){
     printf("\nPlaylist yang kamu punya: ");
     while (fgets(judulPlaylist, sizeof(judulPlaylist), musik) != NULL){
         judulPlaylist[strcspn(judulPlaylist, "\n")] = '\0';
-        printf("\n%d. %s", uruT, judulPlaylist);
+        printf("\n%d. %s\n", uruT, judulPlaylist);
         uruT++;
     }
     fclose(musik);
@@ -52,22 +54,14 @@ void PlaylistQueue(char *userMasuk){
     fgets(playlistPilihan, sizeof(playlistPilihan), stdin); //stdin tu artinya standar input, atau inputan dari user
     playlistPilihan[strcspn(playlistPilihan, "\n")] = '\0';
     
-    int pilihanmu;
-    printf("pilih metode putar mu : \n 1.Putar musik random\n 2.Putra sesuai urutan playlist");
-    scanf("%d", &pilihanmu);
-    while(getchar() != '\n');
-    if (pilihanmu == 2)
-    {
-        cekIsiPlaylist(userMasuk, "musiks", pilihanmu);
+    if (cekIsiPlaylist(userMasuk, playlistPilihan) == 0){
+        return;
     }
-    else{
-        cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
-    }
-    cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
-    
+    pilihanPlay(userMasuk, playlistPilihan);
+    return;
 }
 
-void cekIsiPlaylist(char *userMasuk, char *playlistPilihan, int pilihanmu){
+int cekIsiPlaylist(char *userMasuk, char *playlistPilihan){
     FILE *cekIsi;
     char path[200];
     char lagu[200];
@@ -75,19 +69,19 @@ void cekIsiPlaylist(char *userMasuk, char *playlistPilihan, int pilihanmu){
     cekIsi = fopen(path, "r");
     if (cekIsi == NULL){
         printf("\nAduh, sistemnya error\n");
-        return;
+        return 0;
     }
 
     if (fgets(lagu, sizeof(lagu), cekIsi) == NULL){
         printf("\nPlaylist belum ada isinya\n");
         fclose(cekIsi);
-        return;
+        return 0;
     }
 
-    buatQueue(userMasuk, playlistPilihan, pilihanmu);
+    return 1;
 }
 
-void buatQueue(char *userMasuk, char *playlistPilihan, int pilihanmu){
+void buatStraightQueue(char *userMasuk, char *playlistPilihan){
     head = NULL;
     tail = NULL;
     current = NULL;
@@ -120,42 +114,23 @@ void buatQueue(char *userMasuk, char *playlistPilihan, int pilihanmu){
         }
         hitung++;
     }
-    fclose(isiQueue);
-
-    if (pilihanmu == 1 )
-    {
-        srand(time(NULL));
-        for (int i = hitung - 1; i > 0; i--)
-        {
-            int j = rand() % (i + 1);
-            kiuw *nodeI = head;
-            for (int k = 0; k < i; k++) nodeI = nodeI->next;
-            
-            // Cari node ke-j
-            kiuw *nodeJ = head;
-            for (int k = 0; k < j; k++) nodeJ = nodeJ->next;
-            
-            // Tukar isi string (judul lagu)
-            char tempStr[200];
-            strcpy(tempStr, nodeI->lagu);
-            strcpy(nodeI->lagu, nodeJ->lagu);
-            strcpy(nodeJ->lagu, tempStr);
-        }
-        
-    }
-    
+    fclose(isiQueue);    
     current = head;
     viewQueue(userMasuk);
 }
 
 void viewQueue(char *userMasuk){
     kiuw *temp = head;
-    int no = 1;
+    int no;
     char path[100];
     if (head == NULL){
         printf("\nBelum ada lagu yang diplay\n");
         return; 
     } 
+    
+    perulangan:
+    no = 1;
+    temp = head;
     FILE *history;
     sprintf(path, "%s/history.txt", userMasuk);
     history = fopen(path, "a");
@@ -163,8 +138,8 @@ void viewQueue(char *userMasuk){
     while (temp != NULL){
         if (temp == current){
              printf("%d. %s <-- Lagu yang lagi diplay\n", no, temp->lagu);
-             //fprintf("");
-             //ini ntar aja
+             fprintf(history, "%s\n", current->lagu);
+             fclose(history);
         } else {
             printf("%d. %s\n", no, temp->lagu);
         }
@@ -185,7 +160,7 @@ void viewQueue(char *userMasuk){
             break;
         } else {
             current = current->next;
-            break;
+            goto perulangan;
         }
     } else if (sekips == 'p' || sekips == 'P'){
         if (current->prev == NULL){
@@ -200,7 +175,7 @@ void viewQueue(char *userMasuk){
     }else {
         printf("\nTolong lah, pilih yg bener\n");
     }
-}
+    }
 }
 
 void clearQueue(){
@@ -222,4 +197,38 @@ void clearQueue(){
     current= NULL;
 
     printf("\nQueue sudah dikosongkan\n");
+}
+
+int pilihanPlay(char *userMasuk, char *playlistPilihan){
+int pilihanmu;
+do
+{
+    printf("pilih metode putar mu : \n1.Putar musik random\n2.Putar sesuai urutan playlist\n3. Kembali\n");
+    printf("Masukkan pilihan berdasarkan nomor pilihan: ");
+     if (scanf("%d", &pilihanmu) != 1) {
+        printf("Tidak valid\n");
+        while (getchar() != '\n');
+        continue;
+        }
+        getchar();
+    switch (pilihanmu)
+    {
+    case 1:{
+        buatRandomtQueue(userMasuk, playlistPilihan);
+        break;}
+    case 2:{
+        buatStraightQueue(userMasuk, playlistPilihan);
+        break;
+    }
+    case 3:{
+        break;
+    }
+    default:
+        break;
+    }
+} while (pilihanmu != 3);
+}
+
+void buatRandomtQueue(char *userMasuk, char *playlistPilihan){
+
 }

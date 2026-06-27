@@ -1,79 +1,90 @@
-Mata Air - Hindia|Indie
-Nina - .Feast|Rock
-Untuk Apa / Untuk Apa? - Hindia|Pop
+Untuk Apa - Hindia|Pop
 Perfect - Ed Sheeran|Pop
-In The End - Linkin Park|Rock
 Shape of You - Ed Sheeran|Pop
-Filosofi Kopi - Float|Indie
-Rehat - Kunto Aji|Indie
-Ruang Sendiri - Kunto Aji|Indie
-Tukar Jiwa - Hindia|Indie
 Sebuah Lagu - Tulus|Pop
-Monokrom - Tulus|Pop
 Gajah - Tulus|Pop
 Hati-Hati di Jalan - Tulus|Pop
-Cahaya - Float|Indie
-Sendu - .Feast|Indie
-Sementara - .Feast|Rock
-Peradaban - .Feast|Rock
-Waktu Yang Salah - Fiersa Besari|Indie
-Konstellasi - Hindia|Indie
-Berdua Saja - Payung Teduh|Indie
-Di Atas Meja - Payung Teduh|Indie
-Mari Bercerita - Payung Teduh|Indie
-Akad - Payung Teduh|Indie
-Risalah Hati - Dewa 19|Rock
-Separuh Nafasku - Dewa 19|Rock
-Kangen - Dewa 19|Rock
+Monokrom - Tulus|Pop
+Akad - Payung Teduh|Pop
+Kangen - Dewa 19|Pop
 Kita Selamanya - Vierra|Pop
-Kepada Perempuan yang Sedang dalam Pelukan - Stars and Rabbit|Indie
-Jadilah Legenda - Superman Is Dead|Rock
-Sunset di Tanah Anarki - Superman Is Dead|Rock
-Bukan Pahlawan - Efek Rumah Kaca|Indie
-Cinta Melulu - Efek Rumah Kaca|Indie
-Desember - Efek Rumah Kaca|Indie
-Jatuh Cinta Itu Biasa Saja - Mocca|Indie
 Friends - Mocca|Pop
 My Only One - Mocca|Pop
 Yellow - Coldplay|Pop
-The Scientist - Coldplay|Rock
 Fix You - Coldplay|Pop
+Rolling in the Deep - Adele|Pop
+Someone Like You - Adele|Pop
+Thinking Out Loud - Ed Sheeran|Pop
+Photograph - Ed Sheeran|Pop
+Nina - .Feast|Rock
+Sementara - .Feast|Rock
+Peradaban - .Feast|Rock
+Risalah Hati - Dewa 19|Rock
+Separuh Nafasku - Dewa 19|Rock
+Jadilah Legenda - Superman Is Dead|Rock
+Sunset di Tanah Anarki - Superman Is Dead|Rock
+The Scientist - Coldplay|Rock
 Clocks - Coldplay|Rock
 Numb - Linkin Park|Rock
 Crawling - Linkin Park|Rock
 Bleed It Out - Linkin Park|Rock
-Rolling in the Deep - Adele|Pop
-Someone Like You - Adele|Pop
-Hello - Adele|Pop
-Thinking Out Loud - Ed Sheeran|Pop
-Photograph - Ed Sheeran|Pop
+In The End - Linkin Park|Rock
 Bohemian Rhapsody - Queen|Rock
 We Will Rock You - Queen|Rock
 Don't Stop Me Now - Queen|Rock
-Somebody That I Used to Know - Gotye|Indie
-Take Me to Church - Hozier|Indie
-From Eden - Hozier|Indie
-Skinny Love - Bon Iver|Indie
-Holocene - Bon Iver|Indie
-Re: Stacks - Bon Iver|Indie
-Tongue Tied - Grouplove|Indie
-Colours - Grouplove|Indie
-Ho Hey - The Lumineers|Indie
-Stubborn Love - The Lumineers|Indie
-Ophelia - The Lumineers|Indie
-Budapest - George Ezra|Pop
-Barcelona - George Ezra|Pop
-Shotgun - George Ezra|Pop
-Can't Help Falling in Love - Elvis Presley|Pop
-Suspicious Minds - Elvis Presley|Rock
-Sweet Home Chicago - Robert Johnson|Rock
 Smells Like Teen Spirit - Nirvana|Rock
 Come As You Are - Nirvana|Rock
-Wonderwall - Oasis|Rock
-Don't Look Back in Anger - Oasis|Rock
-Champagne Supernova - Oasis|Rock
-Mr. Brightside - The Killers|Rock
-Human - The Killers|Rock
-All These Things That I've Done - The Killers|Rock
+Mata Air - Hindia|Indie
+Rehat - Kunto Aji|Indie
+Tukar Jiwa - Hindia|Indie
+Sendu - .Feast|Indie
+Waktu Yang Salah - Fiersa Besari|Indie
+Di Atas Meja - Payung Teduh|Indie
+Kepada Perempuan yang Sedang dalam Pelukan - Stars and Rabbit|Indie
+Bukan Pahlawan - Efek Rumah Kaca|Indie
+Cinta Melulu - Efek Rumah Kaca|Indie
+Somebody That I Used to Know - Gotye|Indie
+Take Me to Church - Hozier|Indie
+Skinny Love - Bon Iver|Indie
+Re: Stacks - Bon Iver|Indie
+Tongue Tied - Grouplove|Indie
+Ho Hey - The Lumineers|Indie
+Stubborn Love - The Lumineers|Indie
 Pumped Up Kicks - Foster the People|Indie
-Helena Beat - Foster the People|Indie
+Riptide - Vance Joy|Indie
+Filosofi Kopi - Float|Jazz
+Cahaya - Float|Jazz
+Konstellasi - Hindia|Jazz
+Berdua Saja - Payung Teduh|Jazz
+Mari Bercerita - Payung Teduh|Jazz
+Desember - Efek Rumah Kaca|Jazz
+Jatuh Cinta Itu Biasa Saja - Mocca|Jazz
+Valerie - Amy Winehouse|Jazz
+Back to Black - Amy Winehouse|Jazz
+Home - Michael Bublé|Jazz
+Can't Help Falling in Love - Elvis Presley|Jazz
+Barcelona - George Ezra|Jazz
+Holocene - Bon Iver|Jazz
+From Eden - Hozier|Jazz
+Sweet Home Chicago - Robert Johnson|Jazz
+Hello - Adele|Jazz
+Ruang Sendiri - Kunto Aji|Jazz
+Colours - Grouplove|Jazz
+Three Little Birds - Bob Marley & The Wailers|Reggae
+No Woman, No Cry - Bob Marley & The Wailers|Reggae
+Is This Love - Bob Marley & The Wailers|Reggae
+One Love - Bob Marley & The Wailers|Reggae
+Redemption Song - Bob Marley & The Wailers|Reggae
+Buffalo Soldier - Bob Marley & The Wailers|Reggae
+Exodus - Bob Marley & The Wailers|Reggae
+Jamming - Bob Marley & The Wailers|Reggae
+Stir It Up - Bob Marley & The Wailers|Reggae
+Get Up, Stand Up - Bob Marley & The Wailers|Reggae
+Rivers of Babylon - The Melodians|Reggae
+The Harder They Come - Jimmy Cliff|Reggae
+Many Rivers to Cross - Jimmy Cliff|Reggae
+Wonderful World, Beautiful People - Jimmy Cliff|Reggae
+Pressure Drop - Toots and the Maytals|Reggae
+Monkey Man - Toots and the Maytals|Reggae
+Israelites - Desmond Dekker|Reggae
+The Tide Is High - Blondie|Reggae

@@ -10,10 +10,10 @@ typedef struct playlist {
 
 // Fungsi untuk membaca semua lagu dari file musiks.txt ke dalam Linked List
 playlist* loadLaguDariFile(int *totalLagu) {
-    FILE *file = fopen("musiks.txt", "r");
+    FILE *file = fopen("DataSentral/musiks.txt", "r");
     
     if (file == NULL) {
-        printf("[Peringatan] File 'musiks.txt' tidak ditemukan!\n");
+        printf("[Peringatan] File 'DataSentral/musiks.txt' tidak ditemukan!\n");
         return NULL;
     }
 
@@ -48,7 +48,16 @@ playlist* loadLaguDariFile(int *totalLagu) {
 }
 
 // Fungsi utama untuk memutar lagu dan melakukan autoplay random
-void putarDanAutoplay(playlist *head, int totalLagu) {
+void putarDanAutoplay(char *username, playlist *head, int totalLagu) {
+    FILE *file;
+    char path[200];
+    printf("\n%s\n", username);
+    sprintf(path, "%s/history.txt", username);
+    file = fopen(path, "a");
+    if (file == NULL){
+        printf("\nSistem error\n");
+        return;
+    }
     if (head == NULL || totalLagu == 0) {
         printf("Tidak ada lagu yang bisa diputar.\n");
         return;
@@ -78,6 +87,8 @@ void putarDanAutoplay(playlist *head, int totalLagu) {
     }
 
     printf("SEDANG MEMUTAR: %s\n", temp->judul);
+    fprintf(file, "%s\n", temp->judul);
+    
 
     while(getchar() != '\n'); 
 
@@ -104,17 +115,21 @@ void putarDanAutoplay(playlist *head, int totalLagu) {
         }
         
         printf(" SEDANG MEMUTAR (RANDOM): %s \n", laguAcak->judul);
+        fprintf(file, "%s\n", laguAcak->judul);
+        
     }
+    fclose(file);
 }
 
-void jalankanAplikasi() {
+void jalankanAplikasi(char *usermasuk) {
     int jumlahLagu = 0;
+    printf("\nHai @%s\n", usermasuk);
     
     // Ambil data dari file musiks.txt dan simpan ke Linked List
     playlist *daftarLagu = loadLaguDariFile(&jumlahLagu);
 
     // Jalankan sistem pemutar musik jika data lagu ada
     if (daftarLagu != NULL) {
-        putarDanAutoplay(daftarLagu, jumlahLagu);
+        putarDanAutoplay(usermasuk, daftarLagu, jumlahLagu);
     }
 }
