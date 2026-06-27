@@ -105,8 +105,9 @@ void pilihanUser(char *userMasuk){
     int pil;
     do
     {
+        rekomendTop(userMasuk);
         printf("\nMenu playlist dan play stuff\n");
-        printf("Pilih berdasarkan nomor urut\n1. Pilih playlist untuk diplay\n2. Liat Queue\n3. Clear Queue\n4. History\n5. Keluar\n\n");
+        printf("Pilih berdasarkan nomor urut\n1. Play lagu dan queue random\n2. Pilih playlist untuk diplay\n3. Liat Queue\n4. Clear Queue\n5. History\n6. Keluar\n\n");
         printf("Masukkan pilihan: ");
         if (scanf("%d", &pil) != 1) {
         printf("Tidak valid\n");
@@ -117,22 +118,26 @@ void pilihanUser(char *userMasuk){
         switch (pil)
         {
         case 1:{
+            jalankanAplikasi(userMasuk);
+            break;
+        }
+        case 2:{
             PlaylistQueue(userMasuk);
             break;}
         
-        case 2:{
+        case 3:{
             viewQueue(userMasuk);
             break;}
 
-        case 3:{
+        case 4:{
             clearQueue();
             break;}
         
-        case 4:{
-            
+        case 5:{
+            lihatHistory(userMasuk);
             break;
         }
-        case 5:{
+        case 6:{
             printf("\nTerima kasih\n");
             break;}
         
@@ -140,7 +145,7 @@ void pilihanUser(char *userMasuk){
             printf("\nPilih yang bener lah\n");
             break;}
         }
-    } while (pil != 4);
+    } while (pil != 6);
     return;
     
 }

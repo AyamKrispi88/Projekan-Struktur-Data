@@ -53,7 +53,8 @@ void PlaylistQueue(char *userMasuk){
     playlistPilihan[strcspn(playlistPilihan, "\n")] = '\0';
     
     int pilihanmu;
-    printf("pilih metode putar mu : \n 1.Putar musik random\n 2.Putra sesuai urutan playlist");
+    printf("pilih metode putar mu : \n 1.Putar musik random\n 2.Putra sesuai urutan playlist\n");
+    printf("Masukkan pilihan berdasarkan nomor pilihan: ");
     scanf("%d", &pilihanmu);
     while(getchar() != '\n');
     if (pilihanmu == 2)
@@ -63,8 +64,7 @@ void PlaylistQueue(char *userMasuk){
     else{
         cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
     }
-    cekIsiPlaylist(userMasuk, playlistPilihan, pilihanmu);
-    
+    return;    
 }
 
 void cekIsiPlaylist(char *userMasuk, char *playlistPilihan, int pilihanmu){

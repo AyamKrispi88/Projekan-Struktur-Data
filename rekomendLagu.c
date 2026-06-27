@@ -15,17 +15,18 @@ typedef struct graph{
     struct graph *next;
 }graph;
 
-graph *head = NULL;
-graph *tail = NULL;
+graph *headGraph = NULL;
+graph *tailGraph = NULL;
 
 void bangunGraph();
 void updateDariHistory(char *username);
 void recomendGenreTopDua();
+void rekomendTop(char *username);
 
 void bangunGraph(){
     char buffer[200], path[200];
     FILE *dataMusik;
-    sprintf(path, "DataSentral/musikGenre.txt");
+    sprintf(path, "DataSentral/musiksGenre.txt");
     dataMusik = fopen(path, "r");
 
     if (dataMusik == NULL){
@@ -36,7 +37,7 @@ void bangunGraph(){
         buffer[strcspn(buffer, "\n")] = '\0';
         char *judul = strtok(buffer, "|");
         char *genre = strtok(NULL, "|");
-        graph *tempGenre = head;
+        graph *tempGenre = headGraph;
 
         while (tempGenre != NULL)
         {
@@ -52,11 +53,11 @@ void bangunGraph(){
             bangun->listLagu = NULL;
             bangun->next = NULL;
 
-            if (head == NULL){
-                head = tail = bangun;
+            if (headGraph == NULL){
+                headGraph = tailGraph = bangun;
             } else {
-                tail->next = bangun;
-                tail = bangun;
+                tailGraph->next = bangun;
+                tailGraph = bangun;
             }
             tempGenre = bangun;
         }
@@ -93,7 +94,7 @@ void updateDariHistory(char *username){
 
         char *judul = data;
 
-        graph *g = head;
+        graph *g = headGraph;
 
         while (g != NULL){
             lagu *list = g->listLagu;
@@ -118,7 +119,7 @@ void recomendGenreTopDua(){
     graph *top2 = NULL;
     lagu *temp1, *temp2;
 
-    graph *g = head;
+    graph *g = headGraph;
     int jumlah;
 
     while (g != NULL){
@@ -167,4 +168,10 @@ void recomendGenreTopDua(){
             }
             printf("2. %s\n", temp2->judul);
         }
+}
+
+void rekomendTop(char *username){
+    bangunGraph();
+    updateDariHistory(username);
+    recomendGenreTopDua();
 }
