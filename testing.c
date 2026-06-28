@@ -111,7 +111,6 @@ void pilihanUser(char *userMasuk){
     int pil;
     do
     {
-        rekomendTop(userMasuk);
         printf("\nMenu playlist dan play stuff\n");
         printf("Pilih berdasarkan nomor urut\n1. Play lagu dan queue random\n2. Pilih playlist untuk diplay\n3. Liat Queue\n4. Clear Queue\n5. History\n6. Keluar\n\n");
         printf("Masukkan pilihan: ");

@@ -28,7 +28,6 @@ kiw *tailQueue = NULL;
 kiw *currentQueue = NULL;
 kiw *headRekom = NULL;
 kiw *tailRekom = NULL;
-kiw *currentRekom = NULL;
 
 void bangunGraph();
 void updateDariHistory(char *username);
@@ -36,7 +35,8 @@ void recomendGenreTopDua(char *username);
 void rekomendTop(char *username);
 void putarRekomendasiAcak(char *username, char *judulPilihan);
 void pilihan(char *username);
-
+char toap2[200], toap1[200];
+int jumlah1, jumlah2;
 
 void bangunGraph(){
     char buffer[200], path[200];
@@ -154,7 +154,7 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
         baru->next = baru->prev = NULL;
 
         if (headQueue == NULL){
-            headQueue = tailRekom = baru;
+            headQueue = tailQueue = baru;
         } else {
             tailQueue->next = baru;
             baru->prev = tailQueue;
@@ -169,7 +169,7 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
         srand(time(NULL));
         for (int i = hitung - 1; i > 0; i--) {
             int j = rand() % (i + 1);
-            kiw *nodeI = headRekom, *nodeJ = headRekom;
+            kiw *nodeI = headQueue, *nodeJ = headQueue;
             for (int k = 0; k < i; k++) nodeI = nodeI->next;
             for (int k = 0; k < j; k++) nodeJ = nodeJ->next;
             
@@ -187,7 +187,7 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
             if (temp != headQueue) {
                 if (temp->prev) temp->prev->next = temp->next;
                 if (temp->next) temp->next->prev = temp->prev;
-                if (temp == tailRekom) tailRekom = temp->prev;
+                if (temp == tailQueue) tailQueue = temp->prev;
                 
                 temp->next = headQueue;
                 temp->prev = NULL;
@@ -200,8 +200,8 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
     }
     
     // Tampilkan Informasi
-    currentRekom = headQueue;
-    printf("\n>>> Memutar: %s <<<\n", currentRekom->lagu);
+    currentQueue = headQueue;
+    printf("\n>>> Memutar: %s <<<\n", currentQueue->lagu);
     printf("Lagu selanjutnya telah diacak ke dalam antrian.\n");
 }
 
@@ -213,7 +213,7 @@ void recomendGenreTopDua(char *username){
     lagu *temp1, *temp2;
 
     graph *g = headGraph;
-    int jumlah;
+    int jumlah, jumlah1, jumlah2;
     int jumlahRek=0;
 
     while (g != NULL){
@@ -245,8 +245,10 @@ void recomendGenreTopDua(char *username){
                 temp1 = temp1->next;
             }
             printf("1. %s\n", temp1->judul);
+            strcpy(toap1, temp1->judul);
             jumlahRek++;
         } 
+        jumlah1 = jumlahRek;
         if (top2 != NULL && top2->listLagu != NULL){
             jumlah = 0;
             temp2 = top2->listLagu;
@@ -262,8 +264,10 @@ void recomendGenreTopDua(char *username){
                 temp2 = temp2->next;
             }
             printf("2. %s\n", temp2->judul);
+            strcpy(toap2, temp2->judul);
             jumlahRek++;
         }
+        jumlah2 = jumlahRek;
 }
 
 void rekomendTop(char *username){
@@ -273,98 +277,8 @@ void rekomendTop(char *username){
 }
 
 void pilihan(char *username){
-        srand((unsigned)time(NULL));
-    graph *top1 = NULL;
-    graph *top2 = NULL;
-    lagu *temp1, *temp2;
-
-    graph *g = headGraph;
     int jumlah;
-    int jumlahRek=0;
-
-    while (g != NULL){
-        if (top1 == NULL || g->jumlahPutaran > top1->jumlahPutaran){
-            top2 = top1;
-            top1 = g;   
-        } else if (top2 == NULL || g->jumlahPutaran > top2->jumlahPutaran){
-            top2 = g;
-        }
-        g = g->next;
-    }
-
-    if (top1 == NULL || top1->jumlahPutaran == 0){
-        return;
-    } 
-    
-    printf("\nREKOMENDASI\n");
-        if (top1 != NULL && top1->listLagu != NULL){
-            temp1 = top1->listLagu;
-            jumlah = 0;
-            while (temp1 != NULL){
-                jumlah++;
-                temp1 = temp1->next;
-            }
-
-            int acak1 = rand() % jumlah;
-            temp1 = top1->listLagu;
-            while (acak1--){
-                temp1 = temp1->next;
-            }
-            printf("1. %s\n", temp1->judul);
-            jumlahRek++;
-        } 
-        if (top2 != NULL && top2->listLagu != NULL){
-            jumlah = 0;
-            temp2 = top2->listLagu;
-            while (temp2 != NULL){
-                jumlah++;
-                temp2 = temp2->next;
-            }
-
-            int acak2 = rand() % jumlah;
-            temp2 = top2->listLagu  ;
-
-            while (acak2--){
-                temp2 = temp2->next;
-            }
-            printf("2. %s\n", temp2->judul);
-            jumlahRek++;
-        }
-    printf("\nREKOMENDASI\n");
-        if (top1 != NULL && top1->listLagu != NULL){
-            temp1 = top1->listLagu;
-            jumlah = 0;
-            while (temp1 != NULL){
-                jumlah++;
-                temp1 = temp1->next;
-            }
-
-            int acak1 = rand() % jumlah;
-            temp1 = top1->listLagu;
-            while (acak1--){
-                temp1 = temp1->next;
-            }
-            printf("1. %s\n", temp1->judul);
-            jumlahRek++;
-        } 
-        if (top2 != NULL && top2->listLagu != NULL){
-            jumlah = 0;
-            temp2 = top2->listLagu;
-            while (temp2 != NULL){
-                jumlah++;
-                temp2 = temp2->next;
-            }
-
-            int acak2 = rand() % jumlah;
-            temp2 = top2->listLagu  ;
-
-            while (acak2--){
-                temp2 = temp2->next;
-            }
-            printf("2. %s\n", temp2->judul);
-            jumlahRek++;
-        }
-        printf("3. Kembali\n");
+    printf("\n1. %s\n2. %s\n3. Kembali\n", toap1, toap2);
     int pilihan;
     printf("Pilih lagu yang ingin diputar (1/2/3): ");
     
@@ -376,10 +290,10 @@ void pilihan(char *username){
     }
     while(getchar() != '\n'); // Membersihkan enter (buffer)
 
-    if (pilihan == 1 && jumlahRek >= 1 && temp1 != NULL) {
-        putarRekomendasiAcak(username, temp1->judul);
-    } else if (pilihan == 2 && jumlahRek == 2 && temp2 != NULL) {
-        putarRekomendasiAcak(username, temp2->judul);
+    if (pilihan == 1 && jumlah1 >= 1) {
+        putarRekomendasiAcak(username, toap1);
+    } else if (pilihan == 2 && jumlah2>=1) {
+        putarRekomendasiAcak(username, toap2);
     } else {
         return; // User pilih 3 atau input angka yang salah
     }
