@@ -23,9 +23,9 @@ typedef struct kiuw {
 
 graph *headGraph = NULL;
 graph *tailGraph = NULL;
-kiuw *head = NULL;
-kiuw *tail = NULL;
-kiuw *current = NULL;
+kiuw *headQueue = NULL;
+kiuw *tailQueue = NULL;
+kiuw *currentQueue = NULL;
 
 void bangunGraph();
 void updateDariHistory(char *username);
@@ -125,9 +125,9 @@ void updateDariHistory(char *username){
 }
 
 void putarRekomendasiAcak(char *username, char *judulPilihan) {
-    kiuw *t = head;
+    kiuw *t = headQueue;
     while (t != NULL) { kiuw *hapus = t; t = t->next; free(hapus); }
-    head = tail = current = NULL;
+    headQueue = tailQueue = currentQueue = NULL;
     
     FILE *isiQueue;
     char path[200];
@@ -149,12 +149,12 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
         strcpy(baru->lagu, laguTxt);
         baru->next = baru->prev = NULL;
 
-        if (head == NULL){
-            head = tail = baru;
+        if (headQueue == NULL){
+            headQueue = tail = baru;
         } else {
-            tail->next = baru;
-            baru->prev = tail;
-            tail = baru;
+            tailQueue->next = baru;
+            baru->prev = tailQueue;
+            tailQueue = baru;
         }
         hitung++;
     }
@@ -177,18 +177,18 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
     }
     
     // Pindahkan lagu pilihan user ke nomor 1
-    kiuw *temp = head;
+    kiuw *temp = headQueue;
     while (temp != NULL) {
         if (strcmp(temp->lagu, judulPilihan) == 0) {
-            if (temp != head) {
+            if (temp != headQueue) {
                 if (temp->prev) temp->prev->next = temp->next;
                 if (temp->next) temp->next->prev = temp->prev;
                 if (temp == tail) tail = temp->prev;
                 
-                temp->next = head;
+                temp->next = headQueue;
                 temp->prev = NULL;
-                head->prev = temp;
-                head = temp;
+                headQueue->prev = temp;
+                headQueue = temp;
             }
             break; 
         }
@@ -196,7 +196,7 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
     }
     
     // Tampilkan Informasi
-    current = head;
+    current = headQueue;
     printf("\n>>> Memutar: %s <<<\n", current->lagu);
     printf("Lagu selanjutnya telah diacak ke dalam antrian.\n");
 }
