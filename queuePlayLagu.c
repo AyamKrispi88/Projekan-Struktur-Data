@@ -230,5 +230,56 @@ do
 }
 
 void buatRandomtQueue(char *userMasuk, char *playlistPilihan){
+    FILE *isiQueue;
+    char path[200];
+    char lagu[200];
+    sprintf(path, "%s/%s.txt", userMasuk, playlistPilihan);
+    isiQueue = fopen(path, "r");
+    if (isiQueue == NULL){
+        printf("\nSistem Error\n");
+        return;
+    }
 
+    int hitung = 0;
+    while (fgets(lagu, sizeof(lagu), isiQueue) !=  NULL){
+        lagu[strcspn(lagu, "\n")] = '\0';
+
+        kiuw *baru = (kiuw *) malloc(sizeof(kiuw));
+        strcpy(baru->lagu, lagu);
+        baru->next = NULL;
+        baru->prev = NULL;
+
+        if (head == NULL){
+            head = tail = baru;
+        } else {
+            tail->next = baru;
+            baru->prev = tail;
+            tail = baru;
+        }
+        hitung++;
+    }
+    fclose(isiQueue);
+
+    if (hitung > 1) {
+        srand(time(NULL)); // Inisialisasi seed acak berdasarkan waktu
+        for (int i = hitung - 1; i > 0; i--) {
+            int j = rand() % (i + 1);
+            
+            // Cari node ke-i
+            kiuw *nodeI = head;
+            for (int k = 0; k < i; k++) nodeI = nodeI->next;
+            
+            // Cari node ke-j
+            kiuw *nodeJ = head;
+            for (int k = 0; k < j; k++) nodeJ = nodeJ->next;
+            
+            // Tukar isi string lagu antara nodeI dan nodeJ
+            char tempStr[100]; 
+            strcpy(tempStr, nodeI->lagu);
+            strcpy(nodeI->lagu, nodeJ->lagu);
+            strcpy(nodeJ->lagu, tempStr);
+        }
+    }
+    current = head;
+    viewQueue(userMasuk);
 }
