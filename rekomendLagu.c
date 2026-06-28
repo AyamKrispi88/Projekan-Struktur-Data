@@ -15,23 +15,27 @@ typedef struct graph{
     struct graph *next;
 }graph;
 
-typedef struct kiuw {
+typedef struct kiw {
     char lagu[100];
-    struct kiuw *next;
-    struct kiuw *prev;
-} kiuw;
+    struct kiw *next;
+    struct kiw *prev;
+} kiw;
 
 graph *headGraph = NULL;
 graph *tailGraph = NULL;
-kiuw *headQueue = NULL;
-kiuw *tailQueue = NULL;
-kiuw *currentQueue = NULL;
+kiw *headQueue = NULL;
+kiw *tailQueue = NULL;
+kiw *currentQueue = NULL;
+kiw *headRekom = NULL;
+kiw *tailRekom = NULL;
+kiw *currentRekom = NULL;
 
 void bangunGraph();
 void updateDariHistory(char *username);
 void recomendGenreTopDua(char *username);
 void rekomendTop(char *username);
 void putarRekomendasiAcak(char *username, char *judulPilihan);
+void pilihan(char *username);
 
 
 void bangunGraph(){
@@ -125,8 +129,8 @@ void updateDariHistory(char *username){
 }
 
 void putarRekomendasiAcak(char *username, char *judulPilihan) {
-    kiuw *t = headQueue;
-    while (t != NULL) { kiuw *hapus = t; t = t->next; free(hapus); }
+    kiw *t = headQueue;
+    while (t != NULL) { kiw *hapus = t; t = t->next; free(hapus); }
     headQueue = tailQueue = currentQueue = NULL;
     
     FILE *isiQueue;
@@ -145,12 +149,12 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
         laguTxt[strcspn(laguTxt, "\n")] = '\0';
         if(strlen(laguTxt) == 0) continue;
         
-        kiuw *baru = (kiuw *) malloc(sizeof(kiuw));
+        kiw *baru = (kiw *) malloc(sizeof(kiw));
         strcpy(baru->lagu, laguTxt);
         baru->next = baru->prev = NULL;
 
         if (headQueue == NULL){
-            headQueue = tail = baru;
+            headQueue = tailRekom = baru;
         } else {
             tailQueue->next = baru;
             baru->prev = tailQueue;
@@ -165,7 +169,7 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
         srand(time(NULL));
         for (int i = hitung - 1; i > 0; i--) {
             int j = rand() % (i + 1);
-            kiuw *nodeI = head, *nodeJ = head;
+            kiw *nodeI = headRekom, *nodeJ = headRekom;
             for (int k = 0; k < i; k++) nodeI = nodeI->next;
             for (int k = 0; k < j; k++) nodeJ = nodeJ->next;
             
@@ -177,13 +181,13 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
     }
     
     // Pindahkan lagu pilihan user ke nomor 1
-    kiuw *temp = headQueue;
+    kiw *temp = headQueue;
     while (temp != NULL) {
         if (strcmp(temp->lagu, judulPilihan) == 0) {
             if (temp != headQueue) {
                 if (temp->prev) temp->prev->next = temp->next;
                 if (temp->next) temp->next->prev = temp->prev;
-                if (temp == tail) tail = temp->prev;
+                if (temp == tailRekom) tailRekom = temp->prev;
                 
                 temp->next = headQueue;
                 temp->prev = NULL;
@@ -196,8 +200,8 @@ void putarRekomendasiAcak(char *username, char *judulPilihan) {
     }
     
     // Tampilkan Informasi
-    current = headQueue;
-    printf("\n>>> Memutar: %s <<<\n", current->lagu);
+    currentRekom = headQueue;
+    printf("\n>>> Memutar: %s <<<\n", currentRekom->lagu);
     printf("Lagu selanjutnya telah diacak ke dalam antrian.\n");
 }
 
@@ -260,6 +264,106 @@ void recomendGenreTopDua(char *username){
             printf("2. %s\n", temp2->judul);
             jumlahRek++;
         }
+}
+
+void rekomendTop(char *username){
+    bangunGraph();
+    updateDariHistory(username);
+    recomendGenreTopDua(username);
+}
+
+void pilihan(char *username){
+        srand((unsigned)time(NULL));
+    graph *top1 = NULL;
+    graph *top2 = NULL;
+    lagu *temp1, *temp2;
+
+    graph *g = headGraph;
+    int jumlah;
+    int jumlahRek=0;
+
+    while (g != NULL){
+        if (top1 == NULL || g->jumlahPutaran > top1->jumlahPutaran){
+            top2 = top1;
+            top1 = g;   
+        } else if (top2 == NULL || g->jumlahPutaran > top2->jumlahPutaran){
+            top2 = g;
+        }
+        g = g->next;
+    }
+
+    if (top1 == NULL || top1->jumlahPutaran == 0){
+        return;
+    } 
+    
+    printf("\nREKOMENDASI\n");
+        if (top1 != NULL && top1->listLagu != NULL){
+            temp1 = top1->listLagu;
+            jumlah = 0;
+            while (temp1 != NULL){
+                jumlah++;
+                temp1 = temp1->next;
+            }
+
+            int acak1 = rand() % jumlah;
+            temp1 = top1->listLagu;
+            while (acak1--){
+                temp1 = temp1->next;
+            }
+            printf("1. %s\n", temp1->judul);
+            jumlahRek++;
+        } 
+        if (top2 != NULL && top2->listLagu != NULL){
+            jumlah = 0;
+            temp2 = top2->listLagu;
+            while (temp2 != NULL){
+                jumlah++;
+                temp2 = temp2->next;
+            }
+
+            int acak2 = rand() % jumlah;
+            temp2 = top2->listLagu  ;
+
+            while (acak2--){
+                temp2 = temp2->next;
+            }
+            printf("2. %s\n", temp2->judul);
+            jumlahRek++;
+        }
+    printf("\nREKOMENDASI\n");
+        if (top1 != NULL && top1->listLagu != NULL){
+            temp1 = top1->listLagu;
+            jumlah = 0;
+            while (temp1 != NULL){
+                jumlah++;
+                temp1 = temp1->next;
+            }
+
+            int acak1 = rand() % jumlah;
+            temp1 = top1->listLagu;
+            while (acak1--){
+                temp1 = temp1->next;
+            }
+            printf("1. %s\n", temp1->judul);
+            jumlahRek++;
+        } 
+        if (top2 != NULL && top2->listLagu != NULL){
+            jumlah = 0;
+            temp2 = top2->listLagu;
+            while (temp2 != NULL){
+                jumlah++;
+                temp2 = temp2->next;
+            }
+
+            int acak2 = rand() % jumlah;
+            temp2 = top2->listLagu  ;
+
+            while (acak2--){
+                temp2 = temp2->next;
+            }
+            printf("2. %s\n", temp2->judul);
+            jumlahRek++;
+        }
         printf("3. Kembali\n");
     int pilihan;
     printf("Pilih lagu yang ingin diputar (1/2/3): ");
@@ -279,10 +383,4 @@ void recomendGenreTopDua(char *username){
     } else {
         return; // User pilih 3 atau input angka yang salah
     }
-}
-
-void rekomendTop(char *username){
-    bangunGraph();
-    updateDariHistory(username);
-    recomendGenreTopDua(username);
 }
